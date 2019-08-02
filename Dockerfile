@@ -1,5 +1,5 @@
 ARG FFMPEG_IMAGE=datarhei/ffmpeg:4
-ARG ALPINE_IMAGE=alpine:latest
+ARG ALPINE_IMAGE=alpine:3.8
 
 FROM $FFMPEG_IMAGE as builder
 
@@ -60,7 +60,7 @@ COPY --from=builder /usr/local/bin/ffprobe /usr/local/bin/ffprobe
 COPY --from=builder /usr/local/lib /usr/local/lib
 COPY --from=builder /usr/local/nginx /usr/local/nginx
 
-RUN apk add --no-cache --update libssl1.1 pcre && \
+RUN apk add --no-cache --update libssl1.0 pcre && \
     ffmpeg -buildconf
     
 EXPOSE 1935
