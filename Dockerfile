@@ -60,7 +60,7 @@ COPY --from=builder /usr/local/bin/ffprobe /usr/local/bin/ffprobe
 COPY --from=builder /usr/local/lib /usr/local/lib
 COPY --from=builder /usr/local/nginx /usr/local/nginx
 
-RUN apk add --no-cache --update libssl1.0 pcre && \
+RUN apk add --no-cache --update libssl1.1 pcre && \
     ffmpeg -buildconf
     
 EXPOSE 1935
