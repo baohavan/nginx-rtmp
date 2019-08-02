@@ -33,7 +33,7 @@ RUN export buildDeps="autoconf \
     DIR="$(mktemp -d)" && cd "${DIR}" && \
     curl -LOks "https://github.com/nginx/nginx/archive/release-${NGINX_VERSION}.tar.gz" && \
     tar xzvf "release-${NGINX_VERSION}.tar.gz" && \
-    curl -LOks "https://github.com/sergey-dryabzhinsky/nginx-rtmp-module/archive/${NGINX_RTMP_VERSION}.tar.gz" && \
+    curl -LOks "https://github.com/baohavan/nginx-rtmp-module/archive/${NGINX_RTMP_VERSION}.tar.gz" && \
     tar xzvf "${NGINX_RTMP_VERSION}.tar.gz" && \
     cd "nginx-release-${NGINX_VERSION}" && \
     auto/configure \
