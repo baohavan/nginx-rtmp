@@ -1,7 +1,7 @@
-ARG FFMPEG_IMAGE=datarhei/ffmpeg:4
-ARG ALPINE_IMAGE=alpine:3.8
+#ARG FFMPEG_IMAGE=datarhei/ffmpeg:4
+ARG ALPINE_IMAGE=alpine:latest
 
-FROM $FFMPEG_IMAGE as builder
+#FROM $FFMPEG_IMAGE as builder
 
 ENV NGINX_VERSION=1.15.0 \
     NGINX_RTMP_VERSION=dev \
@@ -52,16 +52,16 @@ FROM $ALPINE_IMAGE
 
 MAINTAINER datarhei <info@datarhei.org>
 
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig \
-    SRC=/usr/local
+#ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig \
+#    SRC=/usr/local
 
-COPY --from=builder /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
-COPY --from=builder /usr/local/bin/ffprobe /usr/local/bin/ffprobe
-COPY --from=builder /usr/local/lib /usr/local/lib
-COPY --from=builder /usr/local/nginx /usr/local/nginx
+#COPY --from=builder /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
+#COPY --from=builder /usr/local/bin/ffprobe /usr/local/bin/ffprobe
+#COPY --from=builder /usr/local/lib /usr/local/lib
+#COPY --from=builder /usr/local/nginx /usr/local/nginx
 
-RUN apk add --no-cache --update libssl1.0 pcre && \
-    ffmpeg -buildconf
+#RUN apk add --no-cache --update libssl1.0 pcre && \
+#    ffmpeg -buildconf
     
 EXPOSE 1935
 
