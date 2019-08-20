@@ -4,7 +4,7 @@ ARG ALPINE_IMAGE=alpine:3.8
 FROM $FFMPEG_IMAGE as builder
 
 ENV NGINX_VERSION=1.15.0 \
-    NGINX_RTMP_VERSION=dev \
+    NGINX_RTMP_VERSION=master \
     PKG_CONFIG_PATH=/usr/local/lib/pkgconfig \
     SRC=/usr/local
 
@@ -29,17 +29,18 @@ RUN export buildDeps="autoconf \
         pcre-dev \
         zlib-dev" && \
     export MAKEFLAGS="-j$(($(grep -c ^processor /proc/cpuinfo) + 1))" && \
+    export CFLAGS="-Wno-unused-but-set-variable" && \
     apk add --update ${buildDeps} libgcc libstdc++ ca-certificates libssl1.0 && \
     DIR="$(mktemp -d)" && cd "${DIR}" && \
     curl -LOks "https://github.com/nginx/nginx/archive/release-${NGINX_VERSION}.tar.gz" && \
     tar xzvf "release-${NGINX_VERSION}.tar.gz" && \
-    curl -LOks "https://github.com/baohavan/nginx-rtmp-module/archive/${NGINX_RTMP_VERSION}.tar.gz" && \
+    curl -LOks "https://github.com/adwpc/nginx-rtmp-module/archive/${NGINX_RTMP_VERSION}.tar.gz" && \
     tar xzvf "${NGINX_RTMP_VERSION}.tar.gz" && \
     cd "nginx-release-${NGINX_VERSION}" && \
     auto/configure \
         --with-http_ssl_module \
         --add-module="../nginx-rtmp-module-${NGINX_RTMP_VERSION}" --with-http_ssl_module && \
-    make && \
+    make "-Wno-unused-variable" && \
     make install && \
     rm -rf "${DIR}" && \
     apk del --purge git && \
